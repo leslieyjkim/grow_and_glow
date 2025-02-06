@@ -4,6 +4,9 @@
 ### Convert from PNG to SVG 
 - https://www.adobe.com/express/
 
+### remove bg image
+- https://www.remove.bg/ko/upload
+
 ### frontend folder
 - npm create vite@latest
 - cd frontend
