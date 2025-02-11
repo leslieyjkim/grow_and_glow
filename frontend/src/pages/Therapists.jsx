@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { AppContext } from '../context/AppContext'
 
 const Therapists = () => {
@@ -8,7 +8,8 @@ const Therapists = () => {
   // console.log(speciality)
 
   const [filterTherapist, setFilterTherapist] = useState([])
-
+  const navigate = useNavigate()
+ 
   const {therapists} = useContext(AppContext)
 
   const applyFilter = () => {
