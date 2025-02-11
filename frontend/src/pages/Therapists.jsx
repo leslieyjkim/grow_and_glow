@@ -26,19 +26,19 @@ const Therapists = () => {
   },[therapists,speciality])
 
   return (
-    <div>
+    <div className='text-gray-600'>
       <p>Browse through the therapists specialist.</p>
-      <div>
-        <div>
-          <p>ABA Therapy</p> 
-          <p>Art Therapy</p>
-          <p>Animal Therapy</p>
-          <p>Music Therapy</p>
-          <p>Occupational Therapy</p>
-          <p>Language Therapy</p>
-          <p>Psychological Therapy</p>
+      <div className='flex flex-col sm:flex-row items-start gap-5 mt-5'>
+        <div className='flex flex-col gap-4 text-sm text-gray-600'>
+          <p onClick={()=> speciality === 'ABA Therapy' ? navigate('/therapists') : navigate('/therapists/ABA Therapy')} className={`w-[94vw] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-600 rounded transition-all cursor-pointer ${speciality === "ABA Therapy" ? "bg-indigo-100 text-black" : ""}`}>ABA Therapy</p> 
+          <p onClick={()=> speciality === 'Art Therapy' ? navigate('/therapists') : navigate('/therapists/Art Therapy')} className={`w-[94vw] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-600 rounded transition-all cursor-pointer ${speciality === "Art Therapy" ? "bg-indigo-100 text-black" : ""}`}>Art Therapy</p>
+          <p onClick={()=> speciality === 'Animal Therapy' ? navigate('/therapists') : navigate('/therapists/Animal Therapy')} className={`w-[94vw] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-600 rounded transition-all cursor-pointer ${speciality === "Animal Therapy" ? "bg-indigo-100 text-black" : ""}`}>Animal Therapy</p>
+          <p onClick={()=> speciality === 'Music Therapy' ? navigate('/therapists') : navigate('/therapists/Music Therapy')} className={`w-[94vw] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-600 rounded transition-all cursor-pointer ${speciality === "Music Therapy" ? "bg-indigo-100 text-black" : ""}`}>Music Therapy</p>
+          <p onClick={()=> speciality === 'Occupational Therapy' ? navigate('/therapists') : navigate('/therapists/Occupational Therapy')} className={`w-[94vw] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-600 rounded transition-all cursor-pointer ${speciality === "Occupational Therapy" ? "bg-indigo-100 text-black" : ""}`}>Occupational Therapy</p>
+          <p onClick={()=> speciality === 'Language Therapy' ? navigate('/therapists') : navigate('/therapists/Language Therapy')} className={`w-[94vw] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-600 rounded transition-all cursor-pointer ${speciality === "Language Therapy" ? "bg-indigo-100 text-black" : ""}`}>Language Therapy</p>
+          <p onClick={()=> speciality === 'Psychological Therapy' ? navigate('/therapists') : navigate('/therapists/Psychological Therapy')} className={`w-[94vw] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-600 rounded transition-all cursor-pointer ${speciality === "Psychological Therapy" ? "bg-indigo-100 text-black" : ""}`}>Psychological Therapy</p>
         </div> 
-        <div>
+        <div className='w-full grid grid-cols-auto gap-4 gap-y-6'>
           {
             filterTherapist.map((item,index)=>(
               <div onClick={()=>navigate(`/appointment/${item._id}`)} className='border border-blue-200 rounded-xl overflow-hidden cursor-pointer hover:translate-y-[-10px] transition-all duration-500' key={index}>
