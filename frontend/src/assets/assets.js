@@ -94,7 +94,7 @@ export const therapists = [
         speciality: 'Psychological Therapy',
         degree: 'RP(Qualifying)',
         experience: '4 Years',
-        about: 'Emma has a diverse clinical background in mental health and addictions with youth and adults in different treatment and clinical settings. Alyssia’s empathetic and holistic approach is warm and genuine, and she treats every client with respect. ',
+        about: 'Emma has a diverse clinical background in mental health and addictions with youth and adults in different treatment and clinical settings. Her empathetic and holistic approach is warm and genuine, and she treats every client with respect. ',
         fees: 180,
         address: {
             line1: '17th Cross, Richmond', 
