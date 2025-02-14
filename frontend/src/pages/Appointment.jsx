@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { AppContext } from '../context/AppContext';
+import { assets } from '../assets/assets';
 
 const Appointment = () => {
   const { therapistId } = useParams();
@@ -37,6 +38,20 @@ const Appointment = () => {
           ) : (
             <p>Loading therapist details...</p>
           )}
+        </div>
+        {/* ----------------Therapist Info: name, degree, experience ---------------- */}
+        <p>{therapistInfo.name} 
+           <img src={assets.verified_icon}/>
+        </p>
+        <div>
+          <p>{therapistInfo.degree} - {therapistInfo.speciality}</p>
+          <button>{therapistInfo.experience}</button>
+        </div>
+
+        {/* ---------------Therapist About ------------------- */}
+        <div>
+          <p>About <img src={assets.info_icon}/></p>
+          <p>{therapistInfo.about}</p>
         </div>
       </div>
     </div>
