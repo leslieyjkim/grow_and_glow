@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { AppContext } from '../context/AppContext';
 import { assets } from '../assets/assets';
 
+
 const Appointment = () => {
   const { therapistId } = useParams();
   const { therapists, currencySymbol } = useContext(AppContext);
@@ -12,6 +13,7 @@ const Appointment = () => {
   const [therapistSlots, setTherapistSlots] = useState([])
   const [slotIndex, setSlotIndex] = useState(0)
   const [slotTime, setSlotTime] = useState('')
+
 
   //1st version had an error using 'async' it crashed and sometimes couldn't get the info.
   //Below is the 1st version I removed:
@@ -34,43 +36,43 @@ const Appointment = () => {
   const getAvailableSlots = async () => {
     setTherapistSlots([])
 
-        // getting current date
-        let today = new Date()
+    // getting current date
+    let today = new Date()
 
-        for (let i = 0; i < 7; i++) {
-            // getting date with index 
-            let currentDate = new Date(today)
-            currentDate.setDate(today.getDate() + i)
+    for (let i = 0; i < 7; i++) {
+      // getting date with index 
+      let currentDate = new Date(today)
+      currentDate.setDate(today.getDate() + i)
 
-            // setting end time of the date with index
-            let endTime = new Date()
-            endTime.setDate(today.getDate() + i)
-            endTime.setHours(21, 0, 0, 0)
+      // setting end time of the date with index
+      let endTime = new Date()
+      endTime.setDate(today.getDate() + i)
+      endTime.setHours(21, 0, 0, 0)
 
-            // setting hours 
-            if (today.getDate() === currentDate.getDate()) {
-                currentDate.setHours(currentDate.getHours() > 10 ? currentDate.getHours() + 1 : 10)
-                currentDate.setMinutes(currentDate.getMinutes() > 30 ? 30 : 0)
-            } else {
-                currentDate.setHours(10)
-                currentDate.setMinutes(0)
-            }
+      // setting hours 
+      if (today.getDate() === currentDate.getDate()) {
+        currentDate.setHours(currentDate.getHours() > 10 ? currentDate.getHours() + 1 : 10)
+        currentDate.setMinutes(currentDate.getMinutes() > 30 ? 30 : 0)
+      } else {
+        currentDate.setHours(10)
+        currentDate.setMinutes(0)
+      }
 
-            let timeSlots = []
+      let timeSlots = []
 
 
-            while (currentDate < endTime) {
-              let formattedTime = currentDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      while (currentDate < endTime) {
+        let formattedTime = currentDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
 
-              // Add slot to array
-              timeSlots.push({
-                  datetime: new Date(currentDate),
-                  time: formattedTime
-              })
+        // Add slot to array
+        timeSlots.push({
+          datetime: new Date(currentDate),
+          time: formattedTime
+        })
 
-              // Increment current time by 30 minutes
-              currentDate.setMinutes(currentDate.getMinutes() + 30)
-          }
+        // Increment current time by 30 minutes
+        currentDate.setMinutes(currentDate.getMinutes() + 30)
+      }
 
 
       setTherapistSlots(prev => ([...prev, timeSlots]))
@@ -86,14 +88,14 @@ const Appointment = () => {
   }, [therapists, therapistId]);
 
 
-  useEffect(()=>{
+  useEffect(() => {
     getAvailableSlots()
-  },[therapistInfo])
+  }, [therapistInfo])
 
 
-  useEffect(()=>{
+  useEffect(() => {
     console.log(therapistSlots);
-  },[therapistSlots])
+  }, [therapistSlots])
 
 
   return therapistInfo && (
@@ -116,7 +118,7 @@ const Appointment = () => {
         <div className='flex-1 border border-gray-400 rounded-lg p-8 py-7 bg-white mx-2 sm:mx-0 mt-[-80px] sm:mt-0 '>
           {/* ----------------Therapist Info: name, degree, experience ---------------- */}
           <p className='flex items-center gap-2 text-2xl font-medium text-gray-900'>
-             {therapistInfo.name}
+            {therapistInfo.name}
             <img className='w-5' src={assets.verified_icon} />
           </p>
           <div className='flex items-center gap-2 text-sm mt-1 text-gray-600'>
@@ -136,17 +138,33 @@ const Appointment = () => {
 
       {/* ---------------Booking Slots----------------- */}
       <div className='sm:ml-72 sm:pl-4 mt-4 font-medium text-gray-700'>
-          <p>Booking Slots</p>
-          <div className='flex gap-3 items-center w-full overflow-x-scroll mt-4'>
-            {
-              therapistSlots.length && therapistSlots.map((item, index)=>(
-                <div onClick={()=>setSlotIndex(index)} className={`text-center py-6 min-w-16 rounded-full cursor-pointer ${slotIndex === index ? 'bg-primary text-black' : 'border border-gray-200'}`} key={index}>
-                  <p>{item[0] && daysOfWeek[item[0].datetime.getDay()]}</p>
-                  <p>{item[0] && item[0].datetime.getDate()}</p>
-                </div>
-              ))
-            }
-          </div>
+        <p>Booking Slots</p>
+        <div className='flex gap-3 items-center w-full overflow-x-scroll mt-4'>
+          {
+            therapistSlots.length && therapistSlots.map((item, index) => (
+              <div 
+                  onClick={() => setSlotIndex(index)} 
+                  className={`text-center py-6 min-w-16 rounded-full cursor-pointer ${slotIndex === index ? 'bg-primary text-black' : 'border border-gray-200'}`} 
+                  key={index}>
+                <p>{item[0] && daysOfWeek[item[0].datetime.getDay()]}</p>
+                <p>{item[0] && item[0].datetime.getDate()}</p>
+              </div>
+            ))
+          }
+        </div>
+
+        <div className='flex items-center gap-3 w-full overflow-x-scroll mt-4'>
+          {therapistSlots.length && therapistSlots[slotIndex].map((item, index) => (
+            <p
+              onClick={() => setSlotTime(item.time)}
+              key={index}
+              className={`text-sm font-light flex-shrink-0 px-5 py-2 rounded-full cursor-pointer ${item.time === slotTime ? 'bg-primary text-black' : 'text-gray-400 border border-gray-300'}`}
+            >
+              {item.time.toLowerCase()}
+            </p>
+          ))}
+        </div>
+
       </div>
     </div>
   );
