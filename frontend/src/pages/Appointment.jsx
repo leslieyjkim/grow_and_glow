@@ -6,6 +6,7 @@ import { assets } from '../assets/assets';
 const Appointment = () => {
   const { therapistId } = useParams();
   const { therapists, currencySymbol } = useContext(AppContext);
+  const daysOfWeek = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']
 
   const [therapistInfo, setTherapistInfo] = useState(null);
   const [therapistSlots, setTherapistSlots] = useState([])
@@ -130,7 +131,22 @@ const Appointment = () => {
           </div>
           <p className='text-gray-500 font-medium mt-4'>Appointment fee: <span className='text-gray-600'>{currencySymbol}{therapistInfo.fees}</span></p>
         </div>
+      </div>
 
+
+      {/* ---------------Booking Slots----------------- */}
+      <div className='sm:ml-72 sm:pl-4 mt-4 font-medium text-gray-700'>
+          <p>Booking Slots</p>
+          <div>
+            {
+              therapistSlots.length && therapistSlots.map((item, index)=>(
+                <div key={index}>
+                  <p>{item[0] && daysOfWeek[item[0].datetime.getDay()]}</p>
+                  <p>{item[0] && item[0].datetime.getDate()}</p>
+                </div>
+              ))
+            }
+          </div>
       </div>
     </div>
   );
