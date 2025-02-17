@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { AppContext } from '../context/AppContext';
 import { assets } from '../assets/assets';
+import RelatedTherapists from '../components/RelatedTherapists'
 
 
 const Appointment = () => {
@@ -74,12 +75,20 @@ const Appointment = () => {
         currentDate.setMinutes(currentDate.getMinutes() + 30)
       }
 
-
       setTherapistSlots(prev => ([...prev, timeSlots]))
     }
   }
 
+  const bookAppointment = async () => {
+    const date = therapistSlots[slotIndex][0].datetime
 
+    let day = date.getDate()
+    let month = date.getMonth() + 1
+    let year = date.getFullYear()
+
+    const slotDate = `${day}_${month}_${year}`
+    console.log(slotDate, slotTime)
+}
 
   useEffect(() => {
     if (therapists && therapists.length > 0 && therapistId) {
@@ -165,7 +174,17 @@ const Appointment = () => {
           ))}
         </div>
 
+        <button 
+            onClick={bookAppointment}
+            className='bg-primary text-black text-sm font-light px-14 py-3 rounded-full my-6'
+        >
+            Book an appointment
+        </button>
       </div>
+
+    {/* --------------Listing Related Therapists---------------- */}
+    <RelatedTherapists therapistId={therapistId} speciality={therapistInfo.speciality}/>
+
     </div>
   );
 };
