@@ -7,9 +7,21 @@ const Appointment = () => {
   const { therapistId } = useParams();
   const { therapists, currencySymbol } = useContext(AppContext);
 
-
   const [therapistInfo, setTherapistInfo] = useState(null);
+  const [therapistSlots, setTherapistSlots] = useState([])
+  const [slotIndex, setSlotIndex] = useState(0)
+  const [slotTime, setSlotTime] = useState('')
 
+  //1st version had an error using 'async' it crashed and sometimes couldn't get the info.
+  //Below is the 1st version I removed:
+
+  // const fetchTherapistInfo = async () => {
+  // const therapistInfo = therapists.find(therapist => therapist._id === therapistId)
+  // setTherapistInfo(therapistInfo)
+  // console.log(therapistInfo)  
+  // }
+
+  //Below is my updated version I added this instead of previous block.
   const fetchTherapistInfo = () => {
     if (therapists && therapists.length > 0) {
       const info = therapists.find(therapist => therapist._id === therapistId);
@@ -17,11 +29,71 @@ const Appointment = () => {
     }
   };
 
+
+  const getAvailableSlots = async () => {
+    setTherapistSlots([])
+
+        // getting current date
+        let today = new Date()
+
+        for (let i = 0; i < 7; i++) {
+            // getting date with index 
+            let currentDate = new Date(today)
+            currentDate.setDate(today.getDate() + i)
+
+            // setting end time of the date with index
+            let endTime = new Date()
+            endTime.setDate(today.getDate() + i)
+            endTime.setHours(21, 0, 0, 0)
+
+            // setting hours 
+            if (today.getDate() === currentDate.getDate()) {
+                currentDate.setHours(currentDate.getHours() > 10 ? currentDate.getHours() + 1 : 10)
+                currentDate.setMinutes(currentDate.getMinutes() > 30 ? 30 : 0)
+            } else {
+                currentDate.setHours(10)
+                currentDate.setMinutes(0)
+            }
+
+            let timeSlots = []
+
+
+            while (currentDate < endTime) {
+              let formattedTime = currentDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+
+              // Add slot to array
+              timeSlots.push({
+                  datetime: new Date(currentDate),
+                  time: formattedTime
+              })
+
+              // Increment current time by 30 minutes
+              currentDate.setMinutes(currentDate.getMinutes() + 30)
+          }
+
+
+      setTherapistSlots(prev => ([...prev, timeSlots]))
+    }
+  }
+
+
+
   useEffect(() => {
     if (therapists && therapists.length > 0 && therapistId) {
       fetchTherapistInfo();
     }
   }, [therapists, therapistId]);
+
+
+  useEffect(()=>{
+    getAvailableSlots()
+  },[therapistInfo])
+
+
+  useEffect(()=>{
+    console.log(therapistSlots);
+  },[therapistSlots])
+
 
   return therapistInfo && (
     <div>
