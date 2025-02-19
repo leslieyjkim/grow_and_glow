@@ -48,7 +48,20 @@ const Navbar = () => {
             </div>
             : <button onClick={()=>navigate('/login')} className='bg-primary text-black px-8 py-3 rounded-full font-light hidden md:block'>Create Account</button>
         }
-        
+        <img onClick={()=> setShowMenu(true)} className='w-6 md:hidden' src={assets.menu_icon} alt="" />
+        {/* ------------------Mobile Menu------------------ */}
+        <div>
+          <div>
+            <img src={assets.logo} alt="" />
+            <img onClick={()=>setShowMenu(false)} src={assets.cross_icon} alt="" />
+          </div>
+          <ul>
+            <NavLink>HOME</NavLink>
+            <NavLink>OUR TEAM</NavLink>
+            <NavLink>ABOUT</NavLink>
+            <NavLink>CONTACT</NavLink>
+          </ul>
+        </div>
       </div>
     </div>
   )
