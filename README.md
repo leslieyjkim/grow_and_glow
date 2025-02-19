@@ -19,3 +19,9 @@
 - https://v3.tailwindcss.com/docs/guides/vite
 - npm install -D tailwindcss@3 postcss autoprefixer
 - npx tailwindcss init -p
+
+
+
+### backend folder
+- npm init
+- npm install express mongoose multer bcrypt cloudinary cors dotenv jsonwebtoken nodemon validator
