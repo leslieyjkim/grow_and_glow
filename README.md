@@ -25,3 +25,6 @@
 ### backend folder
 - npm init
 - npm install express mongoose multer bcrypt cloudinary cors dotenv jsonwebtoken nodemon validator
+- npm start
+(you can open 'localhost:4000' to see backend's working)
+- npm run server (after adding "server": "nodemon server.js" in package.json => we don't need to reconnect after any change made)
