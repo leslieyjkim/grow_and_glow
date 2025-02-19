@@ -8,6 +8,8 @@ const Therapists = () => {
   // console.log(speciality)
 
   const [filterTherapist, setFilterTherapist] = useState([])
+  const [showFilter, setShowFilter] = useState(false)
+
   const navigate = useNavigate()
  
   const {therapists} = useContext(AppContext)
@@ -29,7 +31,8 @@ const Therapists = () => {
     <div className='text-gray-600'>
       <p>Browse through the therapists specialist.</p>
       <div className='flex flex-col sm:flex-row items-start gap-5 mt-5'>
-        <div className='flex flex-col gap-4 text-sm text-gray-600'>
+        <button onClick={()=>setShowFilter(prev => !prev)} className={`py-1 px-3 border rounded text-sm transition-all sm:hidden ${showFilter ? 'bg-primary text-black' : ''}`}>Filters</button>
+        <div className={`flex-col gap-4 text-sm text-gray-600 ${showFilter ? 'flex' : 'hidden sm:flex'}`}>
           <p onClick={()=> speciality === 'ABA Therapy' ? navigate('/therapists') : navigate('/therapists/ABA Therapy')} className={`w-[94vw] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-600 rounded transition-all cursor-pointer ${speciality === "ABA Therapy" ? "bg-indigo-100 text-black" : ""}`}>ABA Therapy</p> 
           <p onClick={()=> speciality === 'Art Therapy' ? navigate('/therapists') : navigate('/therapists/Art Therapy')} className={`w-[94vw] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-600 rounded transition-all cursor-pointer ${speciality === "Art Therapy" ? "bg-indigo-100 text-black" : ""}`}>Art Therapy</p>
           <p onClick={()=> speciality === 'Animal Therapy' ? navigate('/therapists') : navigate('/therapists/Animal Therapy')} className={`w-[94vw] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-600 rounded transition-all cursor-pointer ${speciality === "Animal Therapy" ? "bg-indigo-100 text-black" : ""}`}>Animal Therapy</p>
